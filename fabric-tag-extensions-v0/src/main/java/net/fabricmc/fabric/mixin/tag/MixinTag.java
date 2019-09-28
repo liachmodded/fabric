@@ -19,13 +19,28 @@ package net.fabricmc.fabric.mixin.tag;
 import net.fabricmc.fabric.api.tag.FabricTag;
 import net.fabricmc.fabric.impl.tag.FabricTagHooks;
 import net.minecraft.tag.Tag;
+import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @Mixin(Tag.class)
 public class MixinTag<T> implements FabricTag<T>, FabricTagHooks {
 	@Unique
 	private int fabric_clearCount;
+	
+	private Set<Identifier> aliases;
+	
+	@Inject(method = "<init>*", at = @At("RETURN"))
+	public void onConstructor(CallbackInfo ci) {
+		aliases = new HashSet<>();
+	}
 
 	@Override
 	public boolean hasBeenReplaced() {
@@ -33,7 +48,17 @@ public class MixinTag<T> implements FabricTag<T>, FabricTagHooks {
 	}
 
 	@Override
-	public void fabric_setExtraData(int clearCount) {
+	public void fabric_setClearCount(int clearCount) {
 		this.fabric_clearCount = clearCount;
+	}
+
+	@Override
+	public Set<Identifier> getAliases() {
+		return Collections.unmodifiableSet(aliases);
+	}
+
+	@Override
+	public void addAlias(Identifier alias) {
+		aliases.add(alias);
 	}
 }

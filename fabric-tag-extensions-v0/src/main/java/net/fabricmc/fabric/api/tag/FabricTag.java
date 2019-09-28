@@ -16,6 +16,10 @@
 
 package net.fabricmc.fabric.api.tag;
 
+import net.minecraft.util.Identifier;
+
+import java.util.Set;
+
 /**
  * Interface implemented by {@link net.minecraft.tag.Tag} instances when
  * Fabric API is present.
@@ -27,4 +31,6 @@ public interface FabricTag<T> {
 	 * @return True if the given tag has been "replaced" by a datapack at least once.
 	 */
 	boolean hasBeenReplaced();
+	
+	Set<Identifier> getAliases();
 }

@@ -16,6 +16,8 @@
 
 package net.fabricmc.fabric.api.tag;
 
+import net.minecraft.util.Identifier;
+
 /**
  * Interface implemented by {@link net.minecraft.tag.Tag.Builder} instances when
  * Fabric API is present.

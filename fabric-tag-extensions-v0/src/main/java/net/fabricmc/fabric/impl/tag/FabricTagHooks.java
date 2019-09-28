@@ -16,6 +16,10 @@
 
 package net.fabricmc.fabric.impl.tag;
 
+import net.minecraft.util.Identifier;
+
 public interface FabricTagHooks {
-	void fabric_setExtraData(int clearCount);
+	void fabric_setClearCount(int clearCount);
+	
+	void addAlias(Identifier alias);
 }
